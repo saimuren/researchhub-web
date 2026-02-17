@@ -38,7 +38,9 @@ import LinkToPublicPage from "../LinkToPublicPage";
 import { breakpoints } from "~/config/themes/screen";
 import { faBookmark } from "@fortawesome/pro-regular-svg-icons";
 import { faBookmark as solidBookmark } from "@fortawesome/pro-solid-svg-icons";
-import { faPlus } from "@fortawesome/pro-light-svg-icons";
+import { faPlus, faImage } from "@fortawesome/pro-light-svg-icons";
+import UploadFigureModal from "~/components/Modals/UploadFigureModal";
+import { useState } from "react";
 import { isResearchHubPaper } from "./lib/util";
 import useCurrentUser from "~/config/hooks/useCurrentUser";
 import { parsePeerReview, PeerReview } from "../PeerReview/lib/types";
@@ -66,6 +68,7 @@ const DocumentHeader = ({
   referenceManagerView,
 }: Props) => {
   const documentContext = useContext(DocumentContext);
+  const [isUploadFigureModalOpen, setIsUploadFigureModalOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { revalidateDocument } = useCacheControl();
@@ -276,7 +279,21 @@ const DocumentHeader = ({
                         </IconButton>
                       </PermissionNotificationWrapper>
                     )}
-                    <DocumentOptions document={doc} metadata={metadata} />
+                    
+                    <div 
+                      className={css(styles.btnDots)} 
+                      style={{marginRight: 10, cursor: 'pointer', display: 'flex', alignItems: 'center', height: 35, width: 35, justifyContent: 'center'}}
+                      onClick={() => setIsUploadFigureModalOpen(true)}
+                      data-tip="Add Figure"
+                    >
+                       <FontAwesomeIcon icon={faImage} />
+                    </div>
+                    <UploadFigureModal 
+                      isOpen={isUploadFigureModalOpen} 
+                      closeModal={() => setIsUploadFigureModalOpen(false)} 
+                    />
+        
+<DocumentOptions document={doc} metadata={metadata} />
                   </div>
                 )}
                 {referenceManagerView && (
@@ -352,7 +369,21 @@ const DocumentHeader = ({
                       }
                     />
                   </ReferenceProjectsUpsertContextProvider>
-                  <DocumentOptions document={doc} metadata={metadata} />
+                  
+                    <div 
+                      className={css(styles.btnDots)} 
+                      style={{marginRight: 10, cursor: 'pointer', display: 'flex', alignItems: 'center', height: 35, width: 35, justifyContent: 'center'}}
+                      onClick={() => setIsUploadFigureModalOpen(true)}
+                      data-tip="Add Figure"
+                    >
+                       <FontAwesomeIcon icon={faImage} />
+                    </div>
+                    <UploadFigureModal 
+                      isOpen={isUploadFigureModalOpen} 
+                      closeModal={() => setIsUploadFigureModalOpen(false)} 
+                    />
+        
+<DocumentOptions document={doc} metadata={metadata} />
                 </div>
               )}
               {referenceManagerView && (
